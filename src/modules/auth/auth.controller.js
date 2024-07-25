@@ -4,6 +4,8 @@ import { catchError } from "../../middleware/catchError.js";
 import { userModel } from "../../../database/models/user.model.js";
 import { AppError } from "../../utils/appError.js";
 import transporter from '../../utils/email.js'
+import otpGenerator from "otp-generator";
+
 
 const signup = catchError(async (req, res, next) => {
   let user = new userModel(req.body);
@@ -92,4 +94,40 @@ const validateEmail = catchError(async (req, res) => {
 	
 })
 
-export { signup, signin, changePassword, protectedRoutes, allowedTo , validateEmail };
+
+const forgotPassword = catchError(async (req, res, next) => {
+  let user = await userModel.findOne({email:req.body.email});
+  console.log(user);
+  if (user) {
+    user.otp = otpGenerator.generate(6, {upperCaseAlphabets: false,specialChars: false,});
+    user.save();
+  }
+
+  transporter.sendMail({
+		from: process.env.EMAIL,
+		to: user.email,
+		subject: 'OTP For Changing Password',
+    text: `Your OTP for changing the password is: ${user.otp}`,
+    html: `<p>Your OTP for changing the password is: <strong>${user.otp}</strong></p>`,
+ 	})
+
+
+  !user && res.status(404).json({ message: "user not found" });
+  user && res.json({ message: "success", otp: user.otp });
+});
+
+const resetPassword = catchError(async (req, res, next) => {
+
+  let user = await userModel.findOne({email: req.body.email,otp: req.body.otp});
+  if (user) {
+    user.password = req.body.newPassword
+    user.otp = undefined
+    user.save();
+  }
+  !user && res.status(404).json({ message: "user not found" });
+  user && res.json({ message: "successfully changed password ", otp: user.otp });
+});
+
+
+
+export { signup, signin, changePassword, protectedRoutes, allowedTo , validateEmail ,forgotPassword,resetPassword};

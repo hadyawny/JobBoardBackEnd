@@ -27,6 +27,10 @@ const schema = new mongoose.Schema(
       enum: ["user", "hr", "admin"],
       default: "user",
     },
+    otp: {
+      type: String,
+      trim: true,
+    },
     passwordChangedAt: Date,
     appliedJobs: [{ type: mongoose.Types.ObjectId, ref: "job" }],
     addedJobs: [{ type: mongoose.Types.ObjectId, ref: "job" }],

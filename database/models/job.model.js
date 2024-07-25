@@ -15,7 +15,12 @@ const schema = new mongoose.Schema(
       minLength: [5, "too short job details"],
     },
     company: { type: String, required: true },
-    location: { type: String },
+    location: { type: String  ,required: true },
+    category: {
+      type: String,
+      enum: ["design", "sales", "marketing", "finance", "technology", "engineering", "business", "human resources"],
+      required: true,
+    },
     employmentType: {
       type: String,
       enum: ["full-time", "part-time", "contract", "temporary", "internship"],

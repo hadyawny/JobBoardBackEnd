@@ -15,6 +15,6 @@ jobRouter.route("/:id")
 .put(protectedRoutes,allowedTo("hr"),validation(UpdateJobVal),updateJob)
 .delete(protectedRoutes,allowedTo("hr"),validation(paramsIdVal),deleteJob)
 
-jobRouter.route("/apply/:id").post(protectedRoutes,allowedTo("user"),validation(paramsIdVal),applyToJob)
+jobRouter.route("/apply/:id").post(protectedRoutes,allowedTo("user","hr"),validation(paramsIdVal),applyToJob)
 
 export default jobRouter;

@@ -35,9 +35,9 @@ const updateJob = catchError(async (req, res, next) => {
   job && res.json({ message: "success", job });
 });
 
-const getAllJobs = getAllOne(jobModel);
+const getAllJobs = getAllOne(jobModel,['createdBy','applicants']);
 
-const getSingleJob = getSingleOne(jobModel);
+const getSingleJob = getSingleOne(jobModel,['createdBy','applicants']);
 
 const deleteJob = deleteOne(jobModel);
 

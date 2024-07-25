@@ -17,9 +17,9 @@ const updateUser = catchError(async (req, res,next) => {
   user && res.json({ message: "success", user });
 })
 
-const getAllUsers = getAllOne(userModel);
+const getAllUsers = getAllOne(userModel,['appliedJobs', 'addedJobs']);
 
-const getSingleUser = getSingleOne(userModel);
+const getSingleUser = getSingleOne(userModel,['appliedJobs', 'addedJobs']);
 
 const deleteUser = catchError(async (req, res,next) => {
     let user = await userModel.findByIdAndDelete(req.user._id);

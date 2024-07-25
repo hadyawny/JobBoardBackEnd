@@ -10,19 +10,38 @@ export const deleteOne = (model) => {
 };
 
 
-export const getSingleOne = (model) => {
+export const getSingleOne = (model, populateFields = []) => {
   return catchError(async (req, res, next) => {
-    let document = await model.findById(req.params.id);
+
+    let query = model.findById(req.params.id);
+    if (populateFields.length > 0) {
+      populateFields.forEach(field => query = query.populate(field));
+    }
+
+    let apiFeatures = new ApiFeatures(query, req.query)
+    .fields()
+    .filter()
+    .pagination()
+    .search()
+    .sort();
+
+  let document = await apiFeatures.mongooseQuery;
+
     !document && res.status(404).json({ message: "document not found" });
     document && res.json({ message: "success", document });
   });
 };
 
-export const getAllOne = (model) => {
+export const getAllOne = (model, populateFields = []) => {
   return catchError(async (req, res, next) => {
 
 
-    let apiFeatures = new ApiFeatures(model.find(filterSubCategory), req.query)
+    let query = model.find();
+    if (populateFields.length > 0) {
+      populateFields.forEach(field => query = query.populate(field));
+    }
+
+    let apiFeatures = new ApiFeatures(query, req.query)
       .fields()
       .filter()
       .pagination()

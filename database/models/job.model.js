@@ -25,6 +25,8 @@ const schema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "user",
     },
+    applicants:[{ type: mongoose.Types.ObjectId, ref: "user" }],
+
   },
   { timestamps: true }
 );

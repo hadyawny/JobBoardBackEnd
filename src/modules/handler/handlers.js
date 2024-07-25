@@ -21,10 +21,6 @@ export const getSingleOne = (model) => {
 export const getAllOne = (model) => {
   return catchError(async (req, res, next) => {
 
-    let filterSubCategory = {};
-    if (req.params.category) {
-      filterSubCategory.category = req.params.category;
-    }
 
     let apiFeatures = new ApiFeatures(model.find(filterSubCategory), req.query)
       .fields()

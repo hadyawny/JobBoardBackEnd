@@ -6,7 +6,7 @@ const signupSchemaVal = Joi.object({
     email: Joi.string().email().trim().required(),
     password: Joi.string().pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/).required(),
     rePassword: Joi.valid(Joi.ref('password')).required(),
-    role: Joi.string().valid("user", "hr").required(),
+    role: Joi.string().valid("user", "hr"),
 
 })
 

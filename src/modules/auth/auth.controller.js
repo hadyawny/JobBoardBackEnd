@@ -113,7 +113,7 @@ const forgotPassword = catchError(async (req, res, next) => {
 
 
   !user && res.status(404).json({ message: "user not found" });
-  user && res.json({ message: "success", otp: user.otp });
+  user && res.json({ message: "success" });
 });
 
 const resetPassword = catchError(async (req, res, next) => {

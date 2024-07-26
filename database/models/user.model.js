@@ -18,6 +18,18 @@ const schema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    mobileNumber: {
+      type: String,
+    },
+    currentPosition: {
+      type: String,
+    },
+    education: {
+      type: String,
+    },
+    experience: {
+      type: String,
+    },
     confirmEmail: {
       type: Boolean,
       default: false,

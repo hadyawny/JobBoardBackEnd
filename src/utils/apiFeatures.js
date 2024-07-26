@@ -47,6 +47,9 @@ export class ApiFeatures {
           { email: { $regex: this.searchQuery.keyword } },
           { title: { $regex: this.searchQuery.keyword } },
           { details: { $regex: this.searchQuery.keyword } },
+          { category: { $regex: this.searchQuery.keyword } },
+          { location: { $regex: this.searchQuery.keyword } },
+          { company: { $regex: this.searchQuery.keyword } },
 
         ],
       });

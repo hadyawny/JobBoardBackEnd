@@ -36,7 +36,7 @@ const schema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["user", "hr"],
+      enum: ["user", "hr","admin"],
       default: "user",
     },
     otp: {

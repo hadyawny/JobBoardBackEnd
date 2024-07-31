@@ -23,7 +23,7 @@ const signup = catchError(async (req, res, next) => {
 		text: 'Please validate you email address',
 		html: `<a href="${req.protocol}://${req.headers.host}/api/v1/auth/validate/${token}">Click here to confirm your email address</a>`,
 	})
-  res.json({ message: "success", token , user_id: user._id});
+  res.json({ message: "success", token , user_id: user._id , user_role: user.role});
 });
 
 const signin = catchError(async (req, res, next) => {
@@ -33,7 +33,7 @@ const signin = catchError(async (req, res, next) => {
       { userId: user._id, role: user.role },
       process.env.JWT_KEY
     );
-    return res.json({ message: "success", token ,user_id: user._id});
+    return res.json({ message: "success", token ,user_id: user._id , user_role: user.role});
   }
 
   next(new AppError("incorrect email or password", 401));

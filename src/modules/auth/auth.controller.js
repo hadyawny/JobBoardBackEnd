@@ -96,20 +96,19 @@ const validateEmail = catchError(async (req, res) => {
 
 const forgotPassword = catchError(async (req, res, next) => {
   let user = await userModel.findOne({email:req.body.email});
-  console.log(user);
   if (user) {
     user.otp = otpGenerator.generate(6, {upperCaseAlphabets: false,specialChars: false,});
     user.save();
+    
+    transporter.sendMail({
+      from: process.env.EMAIL,
+      to: user.email,
+      subject: 'OTP For Changing Password',
+      text: `Your OTP for changing the password is: ${user.otp}`,
+      html: `<p>Your OTP for changing the password is: <strong>${user.otp}</strong></p>`,
+    })
   }
-
-  transporter.sendMail({
-		from: process.env.EMAIL,
-		to: user.email,
-		subject: 'OTP For Changing Password',
-    text: `Your OTP for changing the password is: ${user.otp}`,
-    html: `<p>Your OTP for changing the password is: <strong>${user.otp}</strong></p>`,
- 	})
-
+    
 
   !user && res.status(404).json({ message: "user not found" });
   user && res.json({ message: "success" });

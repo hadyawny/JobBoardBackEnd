@@ -19,7 +19,7 @@ const updateUserVal = Joi.object({
   name: Joi.string().min(2).max(30),
   email: Joi.string().email(),
   gender: Joi.string().valid("female", "male"),
-
+  avatar: Joi.number().valid(1,2,3,4,5,6,7,8,9,10,11),
   mobileNumber: Joi.string().min(9).max(15),
   currentPosition: Joi.string().min(2).max(100),
   education: Joi.string().min(2).max(1000),

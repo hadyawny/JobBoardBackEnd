@@ -43,6 +43,10 @@ const schema = new mongoose.Schema(
       type: String,
       enum: ["male", "female"],
     },
+    avatar: {
+      type: Number,
+      enum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+    },
     otp: {
       type: String,
       trim: true,

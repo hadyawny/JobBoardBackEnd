@@ -39,6 +39,10 @@ const schema = new mongoose.Schema(
       enum: ["user", "hr","admin"],
       default: "user",
     },
+    gender: {
+      type: String,
+      enum: ["male", "female"],
+    },
     otp: {
       type: String,
       trim: true,

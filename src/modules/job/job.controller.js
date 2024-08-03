@@ -54,9 +54,27 @@ const deleteJob = catchError(async (req, res, next) => {
   res.json({ message: "Job deleted successfully" });
 });
 
+const deleteJobAdmin = catchError(async (req, res, next) => {
+
+  if (req.user.role == "admin") {
+  const job = await jobModel.findOneAndDelete({ _id: req.params.id});
+
+  if (!job) {
+    return res.status(404).json({ message: "Job not found" });
+  }
+
+  await userModel.findByIdAndUpdate(job.createdBy._id, { $pull: { addedJobs: req.params.id } }, { new: true });
+
+  res.json({ message: "Job deleted successfully" });
+}
+else {
+  res.json({ message: "user is not an admin" });
+}
+});
+
 const getAllJobs = getAllOne(jobModel,['createdBy','applicants']);
 
 const getSingleJob = getSingleOne(jobModel,['createdBy','applicants']);
 
 
-export { addJob, getAllJobs, getSingleJob, updateJob, deleteJob ,applyToJob};
+export { addJob, getAllJobs, getSingleJob, updateJob, deleteJob ,applyToJob,deleteJobAdmin};

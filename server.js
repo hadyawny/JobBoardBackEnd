@@ -3,6 +3,7 @@ import { dbConnection } from "./database/dbConnection.js";
 import { bootstrap } from "./src/modules/index.routes.js";
 import dotenv from "dotenv";
 import cors from "cors"
+import { keepAlive } from "./src/utils/keepAlive.js";
 
 
 const app = express();
@@ -12,9 +13,11 @@ app.use(cors())
 
 dotenv.config();
 app.use(express.json());
-// app.use("/uploads",express.static('uploads'));
 
 dbConnection();
 bootstrap(app);
 
 app.listen(process.env.PORT || port, () => console.log(`Job Board Server is listening on port ${process.env.PORT || port}!`));
+
+const keepAliveUrl = `https://jobboardbackend-u9zm.onrender.com`;
+keepAlive(keepAliveUrl);

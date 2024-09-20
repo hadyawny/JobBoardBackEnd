@@ -19,5 +19,5 @@ bootstrap(app);
 
 app.listen(process.env.PORT || port, () => console.log(`Job Board Server is listening on port ${process.env.PORT || port}!`));
 
-const keepAliveUrl = `https://jobboardbackend-u9zm.onrender.com`;
-keepAlive(keepAliveUrl);
+// const keepAliveUrl = `https://jobboardbackend-u9zm.onrender.com`;
+// keepAlive(keepAliveUrl);
